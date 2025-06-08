@@ -64,7 +64,7 @@ const Footer = () => {
                 <Phone className="w-6 h-6 text-white" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                CPA Offers
+                Offer Game
               </span>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
@@ -132,7 +132,7 @@ const Footer = () => {
               </div>
             )}
             <div className="text-xs text-gray-500">
-              <p>© {currentYear} CPA Offers. All rights reserved.</p>
+              <p>© {currentYear} Offer Game. All rights reserved.</p>
               <p className="mt-1">Made with ❤️ for amazing rewards</p>
             </div>
           </div>

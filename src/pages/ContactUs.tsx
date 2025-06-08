@@ -21,6 +21,7 @@ interface ContactData {
 const ContactUs = () => {
   const [contactData, setContactData] = useState<ContactData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -44,24 +45,78 @@ const ContactUs = () => {
     loadData();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Here you would typically send the form data to your backend
-    console.log('Contact form submitted:', formData);
-    
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
+  const saveMessage = async (messageData: any) => {
+    try {
+      // في بيئة التطوير، يمكن محاولة حفظ الرسالة
+      // لكن في البناء النهائي، ستحتاج لخادم خلفي
+      console.log('Saving message to msg.json:', messageData);
+      
+      // محاولة حفظ الرسالة (يعمل فقط في بيئة التطوير)
+      const existingMessages = await fetch('/data/msg.json')
+        .then(res => res.json())
+        .catch(() => ({ messages: [] }));
 
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
+      const newMessage = {
+        id: Date.now(),
+        timestamp: new Date().toISOString(),
+        ...messageData
+      };
+
+      const updatedMessages = {
+        messages: [...existingMessages.messages, newMessage]
+      };
+
+      // ملاحظة: هذا لن يعمل في البناء النهائي بدون خادم خلفي
+      localStorage.setItem('contactMessages', JSON.stringify(updatedMessages));
+      
+      return true;
+    } catch (error) {
+      console.error('Error saving message:', error);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    
+    try {
+      const messageData = {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message
+      };
+
+      // محاولة حفظ الرسالة
+      const saved = await saveMessage(messageData);
+      
+      console.log('Contact form submitted:', messageData);
+      
+      toast({
+        title: "Message Sent!",
+        description: saved 
+          ? "Your message has been saved and we'll get back to you soon." 
+          : "Message received! We'll get back to you as soon as possible.",
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast({
+        title: "Error",
+        description: "There was an error sending your message. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -75,8 +130,8 @@ const ContactUs = () => {
     {
       icon: Mail,
       title: "Email",
-      value: contactData?.contactUs.email || "contact@example.com",
-      action: `mailto:${contactData?.contactUs.email || "contact@example.com"}`
+      value: contactData?.contactUs.email || "contact@offergame.com",
+      action: `mailto:${contactData?.contactUs.email || "contact@offergame.com"}`
     },
     {
       icon: Phone,
@@ -109,7 +164,7 @@ const ContactUs = () => {
             {contactData?.contactUs.title || "Contact Us"}
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Have questions or need support? We're here to help you make the most of our platform.
+            Have questions or need support? We're here to help you make the most of Offer Game.
           </p>
         </div>
 
@@ -197,6 +252,7 @@ const ContactUs = () => {
                         onChange={handleChange}
                         className="bg-gray-700 border-gray-600 text-white focus:border-blue-500"
                         placeholder="Your full name"
+                        disabled={submitting}
                       />
                     </div>
                     
@@ -213,6 +269,7 @@ const ContactUs = () => {
                         onChange={handleChange}
                         className="bg-gray-700 border-gray-600 text-white focus:border-blue-500"
                         placeholder="your@email.com"
+                        disabled={submitting}
                       />
                     </div>
                   </div>
@@ -230,6 +287,7 @@ const ContactUs = () => {
                       onChange={handleChange}
                       className="bg-gray-700 border-gray-600 text-white focus:border-blue-500"
                       placeholder="What's this about?"
+                      disabled={submitting}
                     />
                   </div>
 
@@ -246,6 +304,7 @@ const ContactUs = () => {
                       onChange={handleChange}
                       className="bg-gray-700 border-gray-600 text-white focus:border-blue-500"
                       placeholder="Tell us how we can help you..."
+                      disabled={submitting}
                     />
                   </div>
 
@@ -253,9 +312,10 @@ const ContactUs = () => {
                     type="submit"
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
                     size="lg"
+                    disabled={submitting}
                   >
                     <Send className="w-5 h-5 mr-2" />
-                    Send Message
+                    {submitting ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               </CardContent>
