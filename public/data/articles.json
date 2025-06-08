@@ -8,17 +8,66 @@
       "description": "Get access to the most advanced gaming tools and boost your performance",
       "descriptionAr": "احصل على أحدث أدوات الألعاب وحسن من أدائك",
       "category": "tools",
+      "offerType": "download",
+      "offerTypeAr": "تحميل",
       "image": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop",
       "reward": "Premium Gaming Account",
       "rewardAr": "حساب ألعاب مميز",
+      "rewardType": "account",
+      "rewardLink": "https://example.com/gaming-tool-download",
+      "rewardFile": "",
       "offerUrl": "https://example.com/offer1",
       "completionUrl": "https://example.com/reward1",
       "featured": true,
       "trending": true,
       "points": 500,
       "estimatedTime": "5 minutes",
-      "requirements": ["Complete survey", "Download app", "Register account"],
-      "requirementsAr": ["أكمل الاستطلاع", "حمل التطبيق", "سجل حساب"],
+      "requirements": [
+        "Complete the survey about gaming preferences",
+        "Download and install the gaming app",
+        "Create a new account and verify your email",
+        "Complete the tutorial level"
+      ],
+      "requirementsAr": [
+        "أكمل الاستطلاع حول تفضيلات الألعاب",
+        "حمل وثبت تطبيق الألعاب",
+        "أنشئ حساب جديد وتحقق من بريدك الإلكتروني",
+        "أكمل مستوى التعليم"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Fill Survey",
+          "titleAr": "املأ الاستطلاع",
+          "description": "Complete the gaming preferences survey",
+          "descriptionAr": "أكمل استطلاع تفضيلات الألعاب",
+          "action": "survey"
+        },
+        {
+          "stepNumber": 2,
+          "title": "Download App",
+          "titleAr": "حمل التطبيق",
+          "description": "Download and install the gaming tool",
+          "descriptionAr": "حمل وثبت أداة الألعاب",
+          "action": "download"
+        },
+        {
+          "stepNumber": 3,
+          "title": "Create Account",
+          "titleAr": "أنشئ حساب",
+          "description": "Register and verify your email",
+          "descriptionAr": "سجل وتحقق من بريدك الإلكتروني",
+          "action": "register"
+        },
+        {
+          "stepNumber": 4,
+          "title": "Complete Tutorial",
+          "titleAr": "أكمل التعليم",
+          "description": "Finish the tutorial to unlock features",
+          "descriptionAr": "أنهي التعليم لفتح الميزات",
+          "action": "tutorial"
+        }
+      ],
       "seoTitle": "Premium Gaming Tool - Boost Your Gaming Performance",
       "seoDescription": "Access premium gaming tools and enhance your gaming experience with our exclusive offer",
       "seoKeywords": ["gaming", "tools", "premium", "performance", "boost"]
@@ -30,17 +79,66 @@
       "description": "Earn free gift cards from your favorite brands",
       "descriptionAr": "اكسب بطاقات هدايا مجانية من علاماتك التجارية المفضلة",
       "category": "gifts",
+      "offerType": "task",
+      "offerTypeAr": "مهمة",
       "image": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
       "reward": "$50 Amazon Gift Card",
       "rewardAr": "بطاقة هدايا أمازون بقيمة 50 دولار",
+      "rewardType": "gift_card",
+      "rewardLink": "https://amazon.com/gift-card-redeem",
+      "rewardFile": "https://example.com/files/amazon-gift-card.pdf",
       "offerUrl": "https://example.com/offer2",
       "completionUrl": "https://example.com/reward2",
       "featured": false,
       "trending": true,
       "points": 1000,
       "estimatedTime": "10 minutes",
-      "requirements": ["Complete tasks", "Verify email", "Share with friends"],
-      "requirementsAr": ["أكمل المهام", "تحقق من البريد الإلكتروني", "شارك مع الأصدقاء"],
+      "requirements": [
+        "Complete 3 simple tasks",
+        "Verify your email address",
+        "Share the offer with 2 friends",
+        "Leave a review"
+      ],
+      "requirementsAr": [
+        "أكمل 3 مهام بسيطة",
+        "تحقق من عنوان بريدك الإلكتروني",
+        "شارك العرض مع صديقين",
+        "اترك تقييم"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Complete Tasks",
+          "titleAr": "أكمل المهام",
+          "description": "Finish all required tasks",
+          "descriptionAr": "أنهي جميع المهام المطلوبة",
+          "action": "task"
+        },
+        {
+          "stepNumber": 2,
+          "title": "Verify Email",
+          "titleAr": "تحقق من البريد",
+          "description": "Check your email and click verification link",
+          "descriptionAr": "تفقد بريدك الإلكتروني وانقر على رابط التحقق",
+          "action": "verify"
+        },
+        {
+          "stepNumber": 3,
+          "title": "Share Offer",
+          "titleAr": "شارك العرض",
+          "description": "Share with friends to unlock bonus",
+          "descriptionAr": "شارك مع الأصدقاء لفتح المكافأة الإضافية",
+          "action": "share"
+        },
+        {
+          "stepNumber": 4,
+          "title": "Leave Review",
+          "titleAr": "اترك تقييم",
+          "description": "Rate your experience",
+          "descriptionAr": "قيم تجربتك",
+          "action": "review"
+        }
+      ],
       "seoTitle": "Free Gift Cards - Earn Rewards Online",
       "seoDescription": "Get free gift cards from top brands by completing simple tasks and offers",
       "seoKeywords": ["gift cards", "free", "rewards", "amazon", "brands"]
@@ -52,17 +150,66 @@
       "description": "Get unlimited coins for your favorite mobile games",
       "descriptionAr": "احصل على عملات غير محدودة لألعابك المحمولة المفضلة",
       "category": "games",
+      "offerType": "game",
+      "offerTypeAr": "لعبة",
       "image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=300&fit=crop",
       "reward": "10,000 Game Coins",
       "rewardAr": "10,000 عملة لعبة",
+      "rewardType": "coins",
+      "rewardLink": "https://game-coins-generator.com/claim",
+      "rewardFile": "https://example.com/files/coin-codes.txt",
       "offerUrl": "https://example.com/offer3",
       "completionUrl": "https://example.com/reward3",
       "featured": true,
       "trending": false,
       "points": 750,
       "estimatedTime": "7 minutes",
-      "requirements": ["Install game", "Reach level 5", "Rate the game"],
-      "requirementsAr": ["ثبت اللعبة", "وصل للمستوى 5", "قيم اللعبة"],
+      "requirements": [
+        "Install the mobile game",
+        "Reach level 5 in the game",
+        "Rate the game 5 stars",
+        "Connect social media account"
+      ],
+      "requirementsAr": [
+        "ثبت اللعبة المحمولة",
+        "وصل للمستوى 5 في اللعبة",
+        "قيم اللعبة بـ 5 نجوم",
+        "اربط حساب وسائل التواصل الاجتماعي"
+      ],
+      "steps": [
+        {
+          "stepNumber": 1,
+          "title": "Install Game",
+          "titleAr": "ثبت اللعبة",
+          "description": "Download and install the mobile game",
+          "descriptionAr": "حمل وثبت اللعبة المحمولة",
+          "action": "install"
+        },
+        {
+          "stepNumber": 2,
+          "title": "Reach Level 5",
+          "titleAr": "اوصل للمستوى 5",
+          "description": "Play and advance to level 5",
+          "descriptionAr": "العب وتقدم للمستوى 5",
+          "action": "play"
+        },
+        {
+          "stepNumber": 3,
+          "title": "Rate Game",
+          "titleAr": "قيم اللعبة",
+          "description": "Give 5-star rating in app store",
+          "descriptionAr": "أعط تقييم 5 نجوم في متجر التطبيقات",
+          "action": "rate"
+        },
+        {
+          "stepNumber": 4,
+          "title": "Connect Social",
+          "titleAr": "اربط الحساب الاجتماعي",
+          "description": "Link your social media account",
+          "descriptionAr": "اربط حساب وسائل التواصل الاجتماعي",
+          "action": "connect"
+        }
+      ],
       "seoTitle": "Mobile Game Coins - Free Gaming Currency",
       "seoDescription": "Earn free coins and currency for popular mobile games through our reward system",
       "seoKeywords": ["mobile games", "coins", "currency", "free", "gaming"]
@@ -92,6 +239,70 @@
       "icon": "gamepad-2",
       "description": "Gaming rewards and in-game items",
       "descriptionAr": "مكافآت الألعاب وعناصر داخل اللعبة"
+    }
+  ],
+  "offerTypes": [
+    {
+      "id": "download",
+      "name": "Download",
+      "nameAr": "تحميل",
+      "description": "Download and install applications"
+    },
+    {
+      "id": "task",
+      "name": "Task",
+      "nameAr": "مهمة",
+      "description": "Complete specific tasks"
+    },
+    {
+      "id": "survey",
+      "name": "Survey",
+      "nameAr": "استطلاع",
+      "description": "Fill out surveys and questionnaires"
+    },
+    {
+      "id": "game",
+      "name": "Game",
+      "nameAr": "لعبة",
+      "description": "Play games and achieve goals"
+    },
+    {
+      "id": "signup",
+      "name": "Sign Up",
+      "nameAr": "تسجيل",
+      "description": "Register for services and websites"
+    }
+  ],
+  "rewardTypes": [
+    {
+      "id": "gift_card",
+      "name": "Gift Card",
+      "nameAr": "بطاقة هدايا",
+      "description": "Digital gift cards"
+    },
+    {
+      "id": "account",
+      "name": "Premium Account",
+      "nameAr": "حساب مميز",
+      "description": "Premium service accounts"
+    },
+    {
+      "id": "coins",
+      "name": "Game Coins",
+      "nameAr": "عملات لعبة",
+      "description": "In-game currency"
+    },
+    {
+      "id": "software",
+      "name": "Software",
+      "nameAr": "برنامج",
+      "description": "Software applications and tools"
+    },
+    {
+      "id": "file",
+      "name": "Digital File",
+      "nameAr": "ملف رقمي",
+      "description": "Digital files and documents"
     }
   ]
 }
