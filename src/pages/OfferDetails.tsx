@@ -1,11 +1,12 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Gift, Star, CheckCircle, ExternalLink, Share2 } from 'lucide-react';
+import { ArrowLeft, Clock, Gift, Star, CheckCircle, ExternalLink, Share2, Users, Shield, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
+import OfferCard from '@/components/OfferCard';
 
 interface Offer {
   id: string;
@@ -29,6 +30,7 @@ const OfferDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [offer, setOffer] = useState<Offer | null>(null);
+  const [suggestedOffers, setSuggestedOffers] = useState<Offer[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasCompleted, setHasCompleted] = useState(false);
 
@@ -39,6 +41,18 @@ const OfferDetails = () => {
         const data = await response.json();
         const foundOffer = data.offers.find((o: Offer) => o.id === id);
         setOffer(foundOffer || null);
+        
+        // Get suggested offers (other offers excluding current one)
+        const otherOffers = data.offers.filter((o: Offer) => o.id !== id);
+        // Prioritize featured and trending offers
+        const prioritized = otherOffers.sort((a: Offer, b: Offer) => {
+          if (a.featured && !b.featured) return -1;
+          if (!a.featured && b.featured) return 1;
+          if (a.trending && !b.trending) return -1;
+          if (!a.trending && b.trending) return 1;
+          return b.points - a.points; // Sort by points descending
+        });
+        setSuggestedOffers(prioritized.slice(0, 3));
         
         // Check if user has completed this offer
         const completedOffers = JSON.parse(localStorage.getItem('completed-offers') || '[]');
@@ -162,7 +176,8 @@ const OfferDetails = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 space-y-8">
+            {/* Hero Section */}
             <Card className="bg-gray-800/50 border-gray-700 overflow-hidden">
               <div className="aspect-video overflow-hidden">
                 <img
@@ -192,13 +207,9 @@ const OfferDetails = () => {
                       </Badge>
                     </div>
                     
-                    <h1 className="text-3xl font-bold text-white mb-4">
+                    <h1 className="text-4xl font-bold text-white mb-6 leading-tight">
                       {offer.title}
                     </h1>
-                    
-                    <p className="text-gray-300 text-lg leading-relaxed">
-                      {offer.description}
-                    </p>
                   </div>
                   
                   <Button
@@ -211,47 +222,103 @@ const OfferDetails = () => {
                   </Button>
                 </div>
 
+                {/* Enhanced Description Section */}
+                <div className="mb-8 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl p-6 border border-blue-500/20">
+                  <h2 className="text-2xl font-semibold text-white mb-4 flex items-center gap-2">
+                    <Award className="w-6 h-6 text-blue-400" />
+                    Amazing Opportunity
+                  </h2>
+                  <p className="text-gray-200 text-lg leading-relaxed mb-4">
+                    {offer.description}
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                    <div className="text-center p-4 bg-gray-700/30 rounded-lg">
+                      <Users className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                      <h3 className="text-white font-semibold">Join Thousands</h3>
+                      <p className="text-gray-400 text-sm">Users who claimed this offer</p>
+                    </div>
+                    <div className="text-center p-4 bg-gray-700/30 rounded-lg">
+                      <Shield className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+                      <h3 className="text-white font-semibold">100% Secure</h3>
+                      <p className="text-gray-400 text-sm">Safe and verified process</p>
+                    </div>
+                    <div className="text-center p-4 bg-gray-700/30 rounded-lg">
+                      <Gift className="w-8 h-8 text-purple-400 mx-auto mb-2" />
+                      <h3 className="text-white font-semibold">Instant Reward</h3>
+                      <p className="text-gray-400 text-sm">Get your reward immediately</p>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Requirements */}
                 <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-white mb-4">Requirements</h3>
-                  <ul className="space-y-3">
+                  <h3 className="text-2xl font-semibold text-white mb-6 flex items-center gap-2">
+                    <CheckCircle className="w-6 h-6 text-green-400" />
+                    What You Need to Do
+                  </h3>
+                  <div className="grid gap-4">
                     {offer.requirements.map((requirement, index) => (
-                      <li key={index} className="flex items-center gap-3 text-gray-300">
-                        <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-                        <span>{requirement}</span>
-                      </li>
+                      <div key={index} className="flex items-center gap-4 p-4 bg-gray-700/30 rounded-lg border border-gray-600">
+                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                          {index + 1}
+                        </div>
+                        <span className="text-gray-200 text-lg">{requirement}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 mb-8">
                   {!hasCompleted ? (
                     <Button
                       onClick={handleStartOffer}
                       size="lg"
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white flex-1"
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white flex-1 text-lg py-6"
                     >
-                      <ExternalLink className="w-5 h-5 mr-2" />
-                      Start Offer
+                      <ExternalLink className="w-6 h-6 mr-3" />
+                      Start This Amazing Offer
                     </Button>
                   ) : (
                     <Button
                       onClick={handleClaimReward}
                       size="lg"
-                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white flex-1"
+                      className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white flex-1 text-lg py-6"
                     >
-                      <Gift className="w-5 h-5 mr-2" />
-                      Claim Reward
+                      <Gift className="w-6 h-6 mr-3" />
+                      Claim Your Reward Now
                     </Button>
                   )}
                   
                   {hasCompleted && (
-                    <div className="flex items-center justify-center gap-2 text-green-400 flex-1">
-                      <CheckCircle className="w-5 h-5" />
-                      <span className="font-medium">Completed!</span>
+                    <div className="flex items-center justify-center gap-3 text-green-400 flex-1 text-lg">
+                      <CheckCircle className="w-6 h-6" />
+                      <span className="font-medium">Successfully Completed!</span>
                     </div>
                   )}
+                </div>
+
+                {/* Why Choose This Offer */}
+                <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-xl p-6 border border-purple-500/20">
+                  <h3 className="text-xl font-semibold text-white mb-4">Why This Offer is Special</h3>
+                  <ul className="space-y-3 text-gray-200">
+                    <li className="flex items-center gap-3">
+                      <Star className="w-5 h-5 text-yellow-400" />
+                      High success rate with instant rewards
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <Shield className="w-5 h-5 text-blue-400" />
+                      Verified and trusted by thousands of users
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <Clock className="w-5 h-5 text-green-400" />
+                      Quick completion in just {offer.estimatedTime}
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <Gift className="w-5 h-5 text-purple-400" />
+                      Premium reward worth much more than the effort
+                    </li>
+                  </ul>
                 </div>
               </CardContent>
             </Card>
@@ -261,20 +328,29 @@ const OfferDetails = () => {
           <div className="space-y-6">
             {/* Reward Info */}
             <Card className="bg-gray-800/50 border-gray-700">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-white mb-4">Reward Details</h3>
-                <div className="space-y-4">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Gift className="w-5 h-5 text-purple-400" />
+                  Reward Details
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="text-center p-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg border border-blue-500/30">
+                  <p className="text-blue-300 font-bold text-xl mb-2">{offer.reward}</p>
+                  <p className="text-gray-400 text-sm">Your Premium Reward</p>
+                </div>
+                <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Reward:</span>
-                    <span className="text-blue-300 font-medium">{offer.reward}</span>
+                    <span className="text-gray-400">Points Earned:</span>
+                    <span className="text-white font-bold">{offer.points}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Points:</span>
-                    <span className="text-white font-medium">{offer.points}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-400">Time:</span>
+                    <span className="text-gray-400">Completion Time:</span>
                     <span className="text-white font-medium">{offer.estimatedTime}</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400">Difficulty:</span>
+                    <span className="text-green-400 font-medium">Easy</span>
                   </div>
                 </div>
               </CardContent>
@@ -282,26 +358,62 @@ const OfferDetails = () => {
 
             {/* Quick Stats */}
             <Card className="bg-gray-800/50 border-gray-700">
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold text-white mb-4">Quick Stats</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-blue-400" />
-                    <span className="text-gray-300">Average completion: {offer.estimatedTime}</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Gift className="w-5 h-5 text-purple-400" />
-                    <span className="text-gray-300">Instant reward delivery</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Star className="w-5 h-5 text-yellow-400" />
-                    <span className="text-gray-300">High success rate</span>
-                  </div>
+              <CardHeader>
+                <CardTitle className="text-white">Quick Stats</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <Clock className="w-5 h-5 text-blue-400" />
+                  <span className="text-gray-300">Average completion: {offer.estimatedTime}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Gift className="w-5 h-5 text-purple-400" />
+                  <span className="text-gray-300">Instant reward delivery</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Star className="w-5 h-5 text-yellow-400" />
+                  <span className="text-gray-300">95% success rate</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Users className="w-5 h-5 text-green-400" />
+                  <span className="text-gray-300">5000+ completed</span>
                 </div>
               </CardContent>
             </Card>
           </div>
         </div>
+
+        {/* Suggested Offers Section */}
+        {suggestedOffers.length > 0 && (
+          <div className="mt-16">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-white mb-4">More Amazing Offers</h2>
+              <p className="text-gray-400 text-lg">Don't miss these incredible opportunities</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {suggestedOffers.map((suggestedOffer) => (
+                <OfferCard 
+                  key={suggestedOffer.id} 
+                  offer={suggestedOffer} 
+                  featured={suggestedOffer.featured}
+                />
+              ))}
+            </div>
+            
+            <div className="text-center mt-8">
+              <Link to="/">
+                <Button 
+                  variant="outline" 
+                  size="lg"
+                  className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white"
+                >
+                  View All Offers
+                </Button>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
