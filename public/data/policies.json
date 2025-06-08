@@ -1,0 +1,23 @@
+
+{
+  "userPolicy": {
+    "title": "User Policy",
+    "titleAr": "سياسة المستخدم",
+    "content": "Welcome to our CPA offers platform. By using our services, you agree to comply with our terms and conditions...",
+    "contentAr": "مرحباً بك في منصة عروض CPA الخاصة بنا. باستخدام خدماتنا، فإنك توافق على الامتثال لشروطنا وأحكامنا..."
+  },
+  "aboutUs": {
+    "title": "About Us",
+    "titleAr": "من نحن",
+    "content": "We are a leading platform connecting users with amazing offers and rewards...",
+    "contentAr": "نحن منصة رائدة تربط المستخدمين بعروض ومكافآت مذهلة..."
+  },
+  "contactUs": {
+    "title": "Contact Us",
+    "titleAr": "اتصل بنا",
+    "email": "contact@example.com",
+    "phone": "+1234567890",
+    "address": "123 Business Street, City, Country",
+    "addressAr": "123 شارع الأعمال، المدينة، البلد"
+  }
+}

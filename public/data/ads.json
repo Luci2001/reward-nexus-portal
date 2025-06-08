@@ -1,0 +1,20 @@
+
+{
+  "adsterra": {
+    "banner_top": "",
+    "banner_bottom": "",
+    "sidebar_left": "",
+    "sidebar_right": "",
+    "popup": "",
+    "native_ads": "",
+    "video_ads": ""
+  },
+  "settings": {
+    "enabled": false,
+    "showOnPages": ["home", "category", "offer"],
+    "frequency": {
+      "popup": 30000,
+      "banner_rotation": 10000
+    }
+  }
+}

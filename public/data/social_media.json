@@ -1,0 +1,14 @@
+
+{
+  "links": {
+    "facebook": "https://facebook.com/yourpage",
+    "whatsapp": "https://wa.me/1234567890",
+    "instagram": "https://instagram.com/yourpage",
+    "tiktok": "https://tiktok.com/@yourpage",
+    "telegram": "https://t.me/yourchannel",
+    "youtube": "https://youtube.com/yourchannel"
+  },
+  "enabled": true,
+  "showInHeader": true,
+  "showInFooter": true
+}

@@ -1,0 +1,97 @@
+
+{
+  "offers": [
+    {
+      "id": "1",
+      "title": "Premium Gaming Tool",
+      "titleAr": "أداة الألعاب المتقدمة",
+      "description": "Get access to the most advanced gaming tools and boost your performance",
+      "descriptionAr": "احصل على أحدث أدوات الألعاب وحسن من أدائك",
+      "category": "tools",
+      "image": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop",
+      "reward": "Premium Gaming Account",
+      "rewardAr": "حساب ألعاب مميز",
+      "offerUrl": "https://example.com/offer1",
+      "completionUrl": "https://example.com/reward1",
+      "featured": true,
+      "trending": true,
+      "points": 500,
+      "estimatedTime": "5 minutes",
+      "requirements": ["Complete survey", "Download app", "Register account"],
+      "requirementsAr": ["أكمل الاستطلاع", "حمل التطبيق", "سجل حساب"],
+      "seoTitle": "Premium Gaming Tool - Boost Your Gaming Performance",
+      "seoDescription": "Access premium gaming tools and enhance your gaming experience with our exclusive offer",
+      "seoKeywords": ["gaming", "tools", "premium", "performance", "boost"]
+    },
+    {
+      "id": "2",
+      "title": "Free Gift Cards",
+      "titleAr": "بطاقات هدايا مجانية",
+      "description": "Earn free gift cards from your favorite brands",
+      "descriptionAr": "اكسب بطاقات هدايا مجانية من علاماتك التجارية المفضلة",
+      "category": "gifts",
+      "image": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
+      "reward": "$50 Amazon Gift Card",
+      "rewardAr": "بطاقة هدايا أمازون بقيمة 50 دولار",
+      "offerUrl": "https://example.com/offer2",
+      "completionUrl": "https://example.com/reward2",
+      "featured": false,
+      "trending": true,
+      "points": 1000,
+      "estimatedTime": "10 minutes",
+      "requirements": ["Complete tasks", "Verify email", "Share with friends"],
+      "requirementsAr": ["أكمل المهام", "تحقق من البريد الإلكتروني", "شارك مع الأصدقاء"],
+      "seoTitle": "Free Gift Cards - Earn Rewards Online",
+      "seoDescription": "Get free gift cards from top brands by completing simple tasks and offers",
+      "seoKeywords": ["gift cards", "free", "rewards", "amazon", "brands"]
+    },
+    {
+      "id": "3",
+      "title": "Mobile Game Coins",
+      "titleAr": "عملات الألعاب المحمولة",
+      "description": "Get unlimited coins for your favorite mobile games",
+      "descriptionAr": "احصل على عملات غير محدودة لألعابك المحمولة المفضلة",
+      "category": "games",
+      "image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=300&fit=crop",
+      "reward": "10,000 Game Coins",
+      "rewardAr": "10,000 عملة لعبة",
+      "offerUrl": "https://example.com/offer3",
+      "completionUrl": "https://example.com/reward3",
+      "featured": true,
+      "trending": false,
+      "points": 750,
+      "estimatedTime": "7 minutes",
+      "requirements": ["Install game", "Reach level 5", "Rate the game"],
+      "requirementsAr": ["ثبت اللعبة", "وصل للمستوى 5", "قيم اللعبة"],
+      "seoTitle": "Mobile Game Coins - Free Gaming Currency",
+      "seoDescription": "Earn free coins and currency for popular mobile games through our reward system",
+      "seoKeywords": ["mobile games", "coins", "currency", "free", "gaming"]
+    }
+  ],
+  "categories": [
+    {
+      "id": "tools",
+      "name": "Tools",
+      "nameAr": "أدوات",
+      "icon": "wrench",
+      "description": "Professional tools and software",
+      "descriptionAr": "أدوات وبرامج احترافية"
+    },
+    {
+      "id": "gifts",
+      "name": "Gifts",
+      "nameAr": "هدايا",
+      "icon": "gift",
+      "description": "Amazing rewards and gift cards",
+      "descriptionAr": "مكافآت رائعة وبطاقات هدايا"
+    },
+    {
+      "id": "games",
+      "name": "Games",
+      "nameAr": "ألعاب",
+      "icon": "gamepad-2",
+      "description": "Gaming rewards and in-game items",
+      "descriptionAr": "مكافآت الألعاب وعناصر داخل اللعبة"
+    }
+  ]
+}
