@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import type { HmrContext } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -19,17 +20,13 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     host: "::"
   },
-  build: {
-    // Ensure JSON files are copied to dist
-    assetsInclude: ['**/*.json']
-  },
   plugins: [
     react(),
     mode === 'development' && componentTagger(),
     // Custom plugin for JSON hot reloading
     {
       name: 'json-hmr',
-      handleHotUpdate({ file, server }) {
+      handleHotUpdate({ file, server }: HmrContext) {
         if (file.includes('public/data/') && file.endsWith('.json')) {
           console.log(`[JSON HMR] ${file} changed, triggering reload`);
           server.ws.send({
