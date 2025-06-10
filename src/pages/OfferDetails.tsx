@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock, Gift, Star, CheckCircle, ExternalLink, Share2, Users, Shield, Award, Download, FileText } from 'lucide-react';
@@ -134,6 +133,41 @@ const OfferDetails = () => {
       title: "تم استلام المكافأة!",
       description: `لقد حصلت بنجاح على: ${offer.reward}`,
     });
+  };
+
+  const handleShare = () => {
+    if (!offer) return;
+    
+    const shareData = {
+      title: offer.titleAr || offer.title,
+      text: offer.descriptionAr || offer.description,
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData).catch((error) => {
+        console.log('Error sharing:', error);
+        fallbackShare();
+      });
+    } else {
+      fallbackShare();
+    }
+  };
+
+  const fallbackShare = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        toast({
+          title: "تم نسخ الرابط!",
+          description: "تم نسخ رابط العرض إلى الحافظة",
+        });
+      });
+    } else {
+      toast({
+        title: "شارك هذا العرض",
+        description: "انسخ الرابط من شريط العناوين لمشاركة هذا العرض",
+      });
+    }
   };
 
   const getRewardIcon = (rewardType: string) => {
