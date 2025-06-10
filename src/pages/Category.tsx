@@ -1,10 +1,11 @@
 
-import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import OfferCard from '@/components/OfferCard';
+import { useArticlesData } from '@/utils/jsonDataManager';
+import { useState } from 'react';
 
 interface Offer {
   id: string;
@@ -30,31 +31,45 @@ interface Category {
 
 const Category = () => {
   const { category } = useParams();
-  const [offers, setOffers] = useState<Offer[]>([]);
-  const [categoryInfo, setCategoryInfo] = useState<Category | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { data: articlesData, loading, error } = useArticlesData();
   const [sortBy, setSortBy] = useState('featured');
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetch('/data/articles.json');
-        const data = await response.json();
-        
-        const categoryOffers = data.offers.filter((offer: Offer) => offer.category === category);
-        setOffers(categoryOffers);
-        
-        const categoryData = data.categories.find((cat: Category) => cat.id === category);
-        setCategoryInfo(categoryData || null);
-      } catch (error) {
-        console.error('Error loading data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
-    loadData();
-  }, [category]);
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center text-red-400">
+          <p>Error loading data: {error}</p>
+          <Link to="/" className="mt-4 inline-block">
+            <Button>Return Home</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const offers = articlesData?.offers?.filter((offer: Offer) => offer.category === category) || [];
+  const categoryInfo = articlesData?.categories?.find((cat: Category) => cat.id === category);
+
+  if (!categoryInfo) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-white mb-4">Category Not Found</h1>
+          <Link to="/">
+            <Button>Return Home</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const sortedOffers = [...offers].sort((a, b) => {
     switch (sortBy) {
@@ -72,27 +87,6 @@ const Category = () => {
         return 0;
     }
   });
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
-  if (!categoryInfo) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Category Not Found</h1>
-          <Link to="/">
-            <Button>Return Home</Button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen py-8">
@@ -151,6 +145,13 @@ const Category = () => {
             <Link to="/" className="mt-4 inline-block">
               <Button variant="outline">Browse Other Categories</Button>
             </Link>
+          </div>
+        )}
+
+        {/* Live Update Indicator */}
+        {import.meta.env.DEV && (
+          <div className="fixed bottom-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm">
+            🔄 Live JSON Updates Active
           </div>
         )}
       </div>

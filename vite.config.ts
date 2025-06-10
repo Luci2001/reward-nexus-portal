@@ -1,3 +1,4 @@
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -8,11 +9,36 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    watch: {
+      // Enable watching of JSON files in public directory
+      include: ['src/**/*', 'public/**/*.json'],
+      ignored: ['**/node_modules/**', '**/dist/**']
+    }
+  },
+  preview: {
+    port: 8080,
+    host: "::"
+  },
+  build: {
+    // Ensure JSON files are copied to dist
+    assetsInclude: ['**/*.json']
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === 'development' && componentTagger(),
+    // Custom plugin for JSON hot reloading
+    {
+      name: 'json-hmr',
+      handleHotUpdate({ file, server }) {
+        if (file.includes('public/data/') && file.endsWith('.json')) {
+          console.log(`[JSON HMR] ${file} changed, triggering reload`);
+          server.ws.send({
+            type: 'full-reload'
+          });
+          return [];
+        }
+      }
+    }
   ].filter(Boolean),
   resolve: {
     alias: {

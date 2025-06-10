@@ -1,36 +1,10 @@
 
-import { useState, useEffect } from 'react';
 import { Users, Target, Award, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-
-interface PolicyData {
-  aboutUs: {
-    title: string;
-    titleAr?: string;
-    content: string;
-    contentAr?: string;
-  };
-}
+import { usePoliciesData } from '@/utils/jsonDataManager';
 
 const AboutUs = () => {
-  const [aboutData, setAboutData] = useState<PolicyData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetch('/data/policies.json');
-        const data = await response.json();
-        setAboutData(data);
-      } catch (error) {
-        console.error('Error loading about data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
+  const { data: aboutData, loading, error } = usePoliciesData();
 
   const features = [
     {
@@ -59,6 +33,16 @@ const AboutUs = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center text-red-400">
+          <p>Error loading page data: {error}</p>
+        </div>
       </div>
     );
   }
@@ -122,6 +106,13 @@ const AboutUs = () => {
             </div>
           ))}
         </div>
+
+        {/* Live Update Indicator */}
+        {import.meta.env.DEV && (
+          <div className="fixed bottom-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm">
+            🔄 Live JSON Updates Active
+          </div>
+        )}
       </div>
     </div>
   );
